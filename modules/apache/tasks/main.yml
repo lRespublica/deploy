@@ -3,7 +3,7 @@
   apt_rpm: name={{ item }} state=installed update_cache=True
   with_items:
    - apache2-base
-   - apache2-mod_php7
+   - apache2-mod_php8.0
    - apache2-mod_ssl
   no_log: True
 
@@ -108,7 +108,7 @@
     insertbefore: '^<\/VirtualHost>'
 
 - name: detect PHP settings
-  shell: rpm -ql apache2-mod_php7 | grep php.ini
+  shell: rpm -ql apache2-mod_php8.0 | grep php.ini
   args:
     warn: no
   register: php_ini

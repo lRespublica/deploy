@@ -4,8 +4,8 @@
   with_items:
     - nextcloud
     - nextcloud-apache2
-    - php7-pcntl
-    - php7-pdo_mysql
+    - php8.0-pcntl
+    - php8.0-pdo_mysql
     - python3-module-pymysql
     - pwgen
     - curl
