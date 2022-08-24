@@ -131,6 +131,14 @@
     value: "32M"
   no_log: True
 
+- name: configure PHP max_input_vars setting
+  ini_file:
+    path: "{{ php_ini.stdout }}"
+    section: PHP
+    option: max_input_vars
+    value: "5000"
+  no_log: True
+
 - name: reload Apache2 configuration
   command: service httpd2 condreload
   args:

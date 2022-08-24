@@ -43,7 +43,7 @@
 - name: generate configuration by install script from moodle
   shell: |
       cd /var/www/webapps/moodle/admin/cli; \
-      php install.php \
+      php -d max_input_vars=5000 install.php \
         --fullname="Moodle" \
         --shortname="Moodle" \
         --lang=ru \
