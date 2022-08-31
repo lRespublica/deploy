@@ -37,6 +37,12 @@
 - name: enable Apache2 module mime
   apache2_module: state=present name=mime
 
+- name: enable Apache2 module mod_php8.0
+  apache2_module: state=present name=mod_php8.0 identifier=php_module
+
+- name: disable Apache2 module mod_php7
+  apache2_module: state=absent name=mod_php7 identifier=php7_module
+
 - name: enable HTTPS (default_https)
   command: a2ensite default_https
   register: cmd1_result
