@@ -7,7 +7,7 @@
 - name: install PostgreSQL server packages
   apt_rpm: name={{ item }} state=installed update_cache=True
   with_items:
-   - postgresql12-server
+   - postgresql-server
   when: pg_init_script.stat.exists == False
 
 - name: check if database already created
