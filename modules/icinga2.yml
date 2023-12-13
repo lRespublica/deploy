@@ -1,0 +1,8 @@
+---
+- name: deploy MariaDB database server and icinga2
+  hosts: local
+  remote_user: root
+  gather_facts: false
+  roles:
+      - mariadb
+      - icinga2

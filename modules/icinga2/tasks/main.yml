@@ -1,0 +1,44 @@
+---
+- name: install icinga2 packages
+  apt_rpm: name={{ item }} state=installed update_cache=True
+  with_items:
+   - icinga2 
+   - icinga2-ido-mysql
+   - icingaweb2
+   - icingaweb2-php-mysql
+   - icingaweb2-nginx
+
+- name: create databases for icinga2
+  shell: printf "CREATE DATABASE icinga;" | mysql
+
+- shell: printf "CREATE DATABASE icingaweb;" | mysql
+- shell: printf "CREATE USER icinga IDENTIFIED BY 'icinga';" | mysql
+- shell: printf "GRANT ALL ON icinga.* TO icinga;" | mysql
+- shell: printf "GRANT ALL ON icingaweb.* TO icinga;" | mysql
+- shell: cat /usr/share/icinga2-ido-mysql/schema/mysql.sql | mysql -u icinga -D icinga -picinga
+
+- name: start icinga2 services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop:
+    - icinga2
+    - nginx
+    - php8.2-fpm
+
+- name: setup icinga2 api
+  shell: icingacli setup config directory --group icingaweb2;
+
+- shell: icingacli setup token create
+- shell: icinga2 api setup
+
+- name: restart icinga2 services
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: yes
+  loop:
+    - icinga2
+    - nginx
+    - php8.2-fpm
